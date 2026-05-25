@@ -3,7 +3,9 @@
 
 # commands used 
  > ls
- > cat 
+ >  
+ > cat
+ >  
  > usage of ./
 
 # problems faced
