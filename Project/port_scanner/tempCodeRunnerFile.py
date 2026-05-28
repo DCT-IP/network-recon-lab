@@ -1,0 +1,1 @@
+print(f"\nScan complete. Time taken: {end_time - start_time:.2f} seconds.")
