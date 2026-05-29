@@ -41,3 +41,23 @@ python3 scanner.py
  - limitation tho: 1 thread per port, need to expand this in next model
 
 ### V4
+ - Added user input support
+ - Added configurable targets
+ - Added configurable port ranges
+ - Improved usability and flexibility
+
+### V5 
+ - Added banner grabbing
+ - Attempted service identification on open ports
+ - Learned basic application-layer interaction
+ - Improved understanding of exposed network services
+ - The output on running a ssh service in wsl
+``` bash
+ Enter the target IPaddress or HostName: localhost
+Enter the starting port: 20
+Enter the ending port: 25
+Scanning localhost....
+
+[OPEN] Port 22
+   Banner: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.15
+```
