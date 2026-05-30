@@ -16,4 +16,3 @@
 
 ## observation
  - nmap -sV took a lot of time, it is due to its aggressive nature.
- - 
