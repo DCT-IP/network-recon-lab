@@ -1,0 +1,28 @@
+====================================================================
+LAB GOAL: Username enumeration via subtly different responses
+====================================================================
+
+[+] Target Base Endpoint: /login
+
+[+] Discovery Evidence (Username Phase):
+--------------------------------------------------------------------
+- Normal Invalid Payloads (e.g., admin, root, guest):
+  HTTP Status: 200 OK
+  Raw Response Length: 3352 bytes
+  Message: "<p class='is-warning'>Invalid username</p>"
+
+- Exploit Outlier Payload:
+  HTTP Status: 200 OK
+  Raw Response Length: 3354 bytes
+  Message: "<p class='is-warning'>Invalid username</p>"
+
+[+] Exploitation Evidence (Password Phase):
+--------------------------------------------------------------------
+- Incorrect Passwords sprayed against valid user:
+  HTTP Status: 200 OK
+  Raw Response Length: [Randomized varying lengths to obfuscate scanner signatures]
+  
+- Valid Account Password:
+  HTTP Status: 302 Found
+  Response Headers: Location: /my-account
+====================================================================
