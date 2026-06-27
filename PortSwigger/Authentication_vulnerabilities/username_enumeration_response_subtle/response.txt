@@ -1,0 +1,28 @@
+====================================================================
+LAB GOAL: Username enumeration via subtly different responses
+====================================================================
+
+[+] Target Base Endpoint: /login
+
+[+] Discovery Evidence (Username Phase):
+--------------------------------------------------------------------
+- Normal Invalid Payloads:
+  HTTP Status: 200 OK
+  Raw Response Length: [Fluctuates due to input reflection]
+  Extracted Error Text: "Invalid username or password."
+
+- Exploit Outlier Payload:
+  HTTP Status: 200 OK
+  Raw Response Length: [Fluctuates due to input reflection]
+  Extracted Error Text: "Invalid username or password"  <-- [Missing Period]
+
+[+] Exploitation Evidence (Password Phase):
+--------------------------------------------------------------------
+- Incorrect Passwords sprayed against valid user:
+  HTTP Status: 200 OK
+  Raw Response Length: [Varying sizes based on session tokens]
+  
+- Valid Account Password:
+  HTTP Status: 302 Found
+  Response Headers: Location: /my-account
+====================================================================
