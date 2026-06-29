@@ -1,4 +1,4 @@
-# OverTheWire Natas Walkthrough: Level 8 → Level 9
+# OverTheWire Natas Walkthrough: Level 7 → Level 8
 
 ### Challenge Description
 The goal of Level 8 is to find the correct secret value to submit to the form to unlock the password for Level 9.
