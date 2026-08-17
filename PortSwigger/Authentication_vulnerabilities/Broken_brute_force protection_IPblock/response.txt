@@ -1,0 +1,122 @@
+====================================================================
+LAB: Broken Brute-Force Protection, IP Block
+====================================================================
+
+[+] LAB GOAL:
+--------------------------------------------------------------------
+Brute-force the victim's password, log in as the victim, and access
+their account page.
+
+[+] PROVIDED CREDENTIALS:
+--------------------------------------------------------------------
+- Known Account:
+  Username: wiener
+  Password: peter
+
+- Victim Account:
+  Username: carlos
+  Password: unknown
+
+[+] TARGET ENDPOINT:
+--------------------------------------------------------------------
+/login
+
+[+] DISCOVERY EVIDENCE:
+--------------------------------------------------------------------
+- Repeated incorrect login attempts against `carlos` eventually
+  trigger an IP block.
+
+- The application uses the attacker's IP address as part of its
+  brute-force protection mechanism.
+
+- The supplied valid credentials:
+    wiener:peter
+
+  can be used to successfully authenticate.
+
+- Key observation:
+  A successful login as `wiener` resets the failed-login counter
+  associated with the attacking IP.
+
+[+] EXPLOIT LOGIC:
+--------------------------------------------------------------------
+The brute-force protection is based on a flawed attempt counter.
+
+Instead of continuously sending failed login attempts against
+`carlos`, alternate attempts against `carlos` with a successful
+login using the known credentials:
+
+    carlos : candidate_password
+    wiener : peter
+
+    carlos : candidate_password
+    wiener : peter
+
+    carlos : candidate_password
+    wiener : peter
+
+The successful `wiener:peter` login resets the failed-attempt
+counter, preventing the IP block from being triggered while the
+candidate passwords for `carlos` are tested.
+
+[+] EXPLOITATION:
+--------------------------------------------------------------------
+1. Intercepted the login request (`POST /login`) using Burp Suite.
+
+2. Confirmed the IP-block behavior by submitting several incorrect
+   passwords for `carlos`.
+
+3. Verified that the known credentials `wiener:peter` successfully
+   authenticate.
+
+4. Constructed the brute-force request sequence so that failed
+   attempts against `carlos` were followed by successful
+   authentication attempts using `wiener:peter`.
+
+5. Loaded the provided candidate password list and executed the
+   attack.
+
+6. Compared the responses for the different password attempts.
+
+7. The successful authentication produced a redirect to:
+
+    /my-account
+
+8. The valid credentials were identified and used to log in as
+   `carlos`.
+
+[+] EXPLOITATION EVIDENCE:
+--------------------------------------------------------------------
+- Victim Username:
+  carlos
+
+- Victim Password:
+  monitor
+
+- Successful Login:
+  HTTP Status: 302 Found
+
+- Redirect:
+  Location: /my-account
+
+[+] FINAL CREDENTIALS:
+--------------------------------------------------------------------
+Username: carlos
+Password: monitor
+
+[+] KEY TAKEAWAY:
+--------------------------------------------------------------------
+The vulnerability is caused by flawed brute-force protection logic.
+
+The application attempts to protect against password brute-forcing
+by blocking the attacker's IP after multiple failed attempts.
+However, the failed-attempt counter is reset by successfully
+authenticating as another account.
+
+Therefore, possession of valid credentials for an unrelated account
+can be used to manipulate the protection mechanism and continue
+brute-forcing the victim's password.
+
+The important lesson is to examine not only whether a security
+control exists, but also how its internal state is tracked, updated,
+and reset.

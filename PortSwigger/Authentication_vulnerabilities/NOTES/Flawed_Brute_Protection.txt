@@ -1,0 +1,6 @@
+ - Brute force attacks are based on trying to make the process as automated as possible
+ and slow down the rate at which an attacker can attempt logins
+ - The ways to prevent brute force attacks are:
+     1. locking the account that the remote user is user trying to access if they make too many failed login attempts
+     2. blocking the remote users IP if many attemps in quick succession
+ - Both can be penerated if implemented using flawed logic.
